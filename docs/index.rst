@@ -10,6 +10,7 @@ Welcome to DTOne Python Client's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+    about
 
 
 Indices and tables
