@@ -1,0 +1,36 @@
+release_sphinx:
+  needs: [build]
+  runs-on: ubuntu-latest
+  container:
+    image: python:3.6
+    volumes:
+      - dist:dist
+      - public:public
+  steps:
+
+    # check out sources that will be used for autodocs, plus readme
+    - uses: actions/checkout@v1
+
+    # download wheel that was build and uploaded in the build step
+    - uses: actions/download-artifact@v1
+      with:
+        name: distributions
+        path: dist
+
+    # didn't need to change anything here, but had to add sphinx.ext.githubpages
+    # to my conf.py extensions list. that fixes the broken uploads
+    - name: Building documentation
+      run: |
+        pip install -r requirements-doc.txt
+        sphinx-build docs public -b dirhtml
+
+    # still need to build and set the PAT to get a rebuild on the pages job,
+    # apart from that quite clean and nice
+    - name: github pages deploy
+      uses: peaceiris/actions-gh-pages@v2
+      env:
+        ACTIONS_DEPLOY_KEY: ${{ secrets.GH_PAGES_DEPLOY_TOKEN }}
+        PUBLISH_BRANCH: gh-pages
+        PUBLISH_DIR: public
+      with:
+        emptyCommits: false
