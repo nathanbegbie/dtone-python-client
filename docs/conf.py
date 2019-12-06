@@ -19,7 +19,7 @@ import datetime
 # -- Project information -----------------------------------------------------
 
 project = 'DTOne Python Client'
-copyright = f"{datetime.datetime.now().year}, Nathan Begbie"
+copyright = "{}, Nathan Begbie".format(datetime.datetime.now().year)
 author = 'Nathan Begbie'
 
 # The full version, including alpha/beta/rc tags
