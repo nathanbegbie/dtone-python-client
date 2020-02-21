@@ -1,3 +1,5 @@
+name: Use Local Action
+
 on: [push]
 
 jobs:
